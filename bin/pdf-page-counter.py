@@ -17,6 +17,8 @@ def print_table(table_data):
     print (ascii_table.table)
 
 
+
+
 def count_pages(filename):
 
     data = open(filename, "rb").read()
@@ -43,8 +45,17 @@ def display_page_sum(file_list):
         result.append([file, page_count])
         page_sum += int(page_count)
     result.append(["Total", page_sum])
+    write_result(result)
     print_table(result)
 
+
+def write_result(result):
+    with open('result.txt', 'w', encoding='utf8') as fw:
+        for [file, page_count] in result:
+            fw.write(file + '\t' + str(page_count) +'\n')
+    
+
+    
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
@@ -55,7 +66,7 @@ if __name__ == '__main__':
                         const=True, default=False, type=bool, nargs='?',
                         help="Recursively search subdirectories as well")
 
-    parser.add_argument("dir", default=".", type=str, nargs='*',
+    parser.add_argument("dir", default="../data", type=str, nargs='*',
                         help="Directory containing pdf files")
 
     args = parser.parse_args()
